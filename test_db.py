@@ -1,5 +1,5 @@
 # test_db.py
-from db import insert_vulnerability, get_all_vulnerabilities
+from database.database import insert_vulnerability, get_all_vulnerabilities
 
 # Sample data
 sample_vuln = {

@@ -20,8 +20,8 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "465"))  # SSL Port
 
 # Scraper Configuration
 MITRE_CVE_URL = "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=windows"
+
 REDHAT_RSS_URL = "https://access.redhat.com/security/data/metrics/cve.xml"
-DELL_SECURITY_URL = "https://www.dell.com/support/security/en-us"
 NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 MICROSOFT_ADVISORIES_URL = "https://msrc.microsoft.com/update-guide/en-us"
 REDDIT_SEARCH_QUERY = "security OR vulnerability OR exploit"
