@@ -1,4 +1,4 @@
-from database import insert_vulnerability, check_existing_vulnerability
+from pymongo import MongoClient
 import os
 
 # Load MongoDB connection from environment variables
