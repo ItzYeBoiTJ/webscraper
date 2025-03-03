@@ -1,29 +1,25 @@
 import sys
 import os
+import requests
+from bs4 import BeautifulSoup
+import logging
+
+# Ensure database module is accessible
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from database.database import insert_vulnerability
 
-# scrapers/fetch_microsoft.py
-import os
-import sys
-import requests
-from bs4 import BeautifulSoup
-import logging
-<<<<<<< HEAD
-from database.database import insert_vulnerability
-
-
-=======
->>>>>>> 2ced185d221c8ea869bb3dfb511f523c4bbdabea
+# Microsoft Security Advisories URL
 MICROSOFT_ADVISORIES_URL = "https://msrc.microsoft.com/update-guide/en-us"
 
+# Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
+
 def fetch_microsoft_vulnerabilities():
-    """Scrape Microsoft's security advisories for new vulnerabilities."""
+    """Scrape Microsoft's security advisories for new vulnerabilities (Max 100 Entries)."""
     response = requests.get(MICROSOFT_ADVISORIES_URL)
-    
+
     if response.status_code != 200:
         logging.error(f"❌ Failed to fetch Microsoft advisories. Status: {response.status_code}")
         return
@@ -31,24 +27,34 @@ def fetch_microsoft_vulnerabilities():
     soup = BeautifulSoup(response.text, "html.parser")
     vulnerabilities = []
 
-    # Extract vulnerability details (Example: Adjust for real Microsoft structure)
-    for vuln in soup.find_all("div", class_="advisory-item"):
-        cve_id = vuln.find("span", class_="cve-id").text.strip()
-        description = vuln.find("p", class_="description").text.strip()
-        severity = vuln.find("span", class_="severity").text.strip()
+    # Extract vulnerability details (Modify based on actual HTML structure)
+    advisory_items = soup.find_all("div", class_="advisory-item")[:100]  # ✅ Limit to 100 results
+
+    for vuln in advisory_items:
+        cve_element = vuln.find("span", class_="cve-id")
+        desc_element = vuln.find("p", class_="description")
+        severity_element = vuln.find("span", class_="severity")
+
+        if not (cve_element and desc_element and severity_element):
+            continue  # Skip if required data is missing
+
+        cve_id = cve_element.text.strip()
+        description = desc_element.text.strip()
+        severity = severity_element.text.strip()
 
         vuln_data = {
             "cve_id": cve_id,
             "description": description,
             "severity": severity,
             "oem": "Microsoft",
-            "source": "Microsoft Security Advisories"
+            "source": "Microsoft Security Advisories",
         }
 
-        insert_vulnerability(vuln_data)
+        insert_vulnerability(vuln_data, "microsoft_vulnerabilities")  # ✅ Store in Microsoft collection
         vulnerabilities.append(vuln_data)
 
     logging.info(f"✅ {len(vulnerabilities)} vulnerabilities added from Microsoft.")
+
 
 if __name__ == "__main__":
     fetch_microsoft_vulnerabilities()

@@ -6,6 +6,10 @@ import logging
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+import importlib
+import database.database
+importlib.reload(database.database)
+
 from database.database import insert_vulnerability, check_existing_vulnerability
 
 # NVD API URL
@@ -20,7 +24,7 @@ async def fetch_nvd_page(start_index):
     async with httpx.AsyncClient() as client:
         params = {
             "startIndex": start_index,
-            "resultsPerPage": 100,  # Only fetch 100 results total
+            "resultsPerPage": 100,
             "cvssV3Severity": "CRITICAL"
         }
         try:
@@ -58,9 +62,10 @@ async def fetch_all_nvd_vulnerabilities():
             "source": "NVD API"
         }
 
-        if not check_existing_vulnerability(vuln_data["cve_id"]):
+        # ✅ FIX: Ensure "nvd_vulnerabilities" is passed
+        if not check_existing_vulnerability(vuln_data["cve_id"], "nvd_vulnerabilities"):
             vulnerabilities.append(vuln_data)
-            insert_vulnerability(vuln_data)
+            insert_vulnerability(vuln_data, "nvd_vulnerabilities")
 
     logging.info(f"✅ {len(vulnerabilities)} new vulnerabilities added from NVD.")
 
