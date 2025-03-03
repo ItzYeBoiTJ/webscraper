@@ -22,3 +22,11 @@ def insert_vulnerability(vuln_data):
 def check_existing_vulnerability(cve_id):
     """Check if a vulnerability already exists."""
     return collection.find_one({"cve_id": cve_id}) is not None
+
+def get_all_vulnerabilities():
+    """Retrieve all vulnerabilities from MongoDB."""
+    return list(collection.find({}, {"_id": 0}))  # Excludes MongoDB _id field
+
+def get_vulnerability_by_cve(cve_id):
+    """Retrieve a vulnerability by CVE ID"""
+    return collection.find_one({"cve_id": cve_id}, {"_id": 0})
