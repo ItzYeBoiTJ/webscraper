@@ -1,13 +1,16 @@
-# scrapers/fetch_reddit.py
 import praw
 import os
 import logging
+from dotenv import load_dotenv
 from database.database import insert_vulnerability
 
-# Reddit API credentials (Replace with actual values)
-REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID", "your_client_id")
-REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET", "your_client_secret")
-USER_AGENT = "vuln-scraper"
+# Load environment variables
+load_dotenv()
+
+# Reddit API credentials from .env
+REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
+REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
+USER_AGENT = "OEM Vulnerability Scraper by Tarnished" 
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -23,7 +26,7 @@ def fetch_reddit_vulnerabilities():
     """Scrape Reddit posts for security discussions mentioning CVEs."""
     vulnerabilities = []
     subreddits = ["netsec", "sysadmin"]
-
+    
     for subreddit in subreddits:
         for post in reddit.subreddit(subreddit).new(limit=50):
             if "CVE-" in post.title:  # Check if the post mentions a CVE
