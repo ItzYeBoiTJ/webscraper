@@ -30,3 +30,13 @@ def get_all_vulnerabilities():
 def get_vulnerability_by_cve(cve_id):
     """Retrieve a vulnerability by CVE ID"""
     return collection.find_one({"cve_id": cve_id}, {"_id": 0})
+
+def get_all_vulnerabilities_ms(severity=None):
+    # Fetch Microsoft vulnerabilities from your database
+    # Example placeholder:
+    return [{"cve_id": "CVE-2025-0001", "severity": "Critical", "description": "Example vulnerability from Microsoft"}]
+
+def get_vulnerability_by_cve_ms(cve_id):
+    # Fetch a specific Microsoft vulnerability from your database
+    # Example placeholder:
+    return {"cve_id": cve_id, "severity": "High", "description": "Detailed Microsoft vulnerability info"}
