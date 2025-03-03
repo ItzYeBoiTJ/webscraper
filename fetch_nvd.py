@@ -2,7 +2,8 @@
 import asyncio
 import httpx
 import logging
-from db.mongodb import insert_vulnerability, check_existing_vulnerability
+from database import insert_vulnerability, check_existing_vulnerability
+
 
 # NVD API URL
 NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
