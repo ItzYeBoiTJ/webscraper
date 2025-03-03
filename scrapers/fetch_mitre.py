@@ -16,22 +16,24 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 MITRE_CVE_URL = "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=windows"
 
 def fetch_mitre_vulnerabilities():
-    """Scrape vulnerability data from MITRE CVE List"""
+    """Scrape vulnerability data from MITRE CVE List (Max 100 Entries)"""
     response = requests.get(MITRE_CVE_URL)
     
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         vulnerabilities = []
 
-        # Find all CVE entries in the table
-        for row in soup.select("table tr")[1:]:  # Skip header row
+        # Find all CVE entries in the table (Limit to 100)
+        rows = soup.select("table tr")[1:101]  # Skip header row, limit to 100 entries
+
+        for row in rows:
             cols = row.find_all("td")
             if len(cols) < 2:
                 continue
             
             cve_id = cols[0].text.strip()
             description = cols[1].text.strip()
-            severity = "Unknown"  # MITRE does not provide severity, so we mark it as Unknown
+            severity = "Unknown"  # MITRE does not provide severity
 
             vuln_data = {
                 "cve_id": cve_id,

@@ -4,7 +4,6 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-
 import requests
 import xml.etree.ElementTree as ET
 import logging
@@ -17,14 +16,15 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 REDHAT_RSS_URL = "https://access.redhat.com/security/data/metrics/cve.xml"
 
 def fetch_redhat_vulnerabilities():
-    """Fetch vulnerability data from Red Hat Security Advisories"""
+    """Fetch vulnerability data from Red Hat Security Advisories (Max 100 Entries)"""
     response = requests.get(REDHAT_RSS_URL)
 
     if response.status_code == 200:
         root = ET.fromstring(response.content)
         vulnerabilities = []
 
-        for item in root.findall(".//entry"):
+        # Limit results to 100
+        for item in root.findall(".//entry")[:100]:  # Slice to 100 max
             cve_id = item.find("id").text.strip()
             description = item.find("summary").text.strip() if item.find("summary") is not None else "No description available"
             severity = item.find("severity").text.strip() if item.find("severity") is not None else "Unknown"
