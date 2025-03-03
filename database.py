@@ -1,20 +1,24 @@
-# db.py
-from pymongo import MongoClient
-import config
+from database import insert_vulnerability, check_existing_vulnerability
+import os
 
-# Connect to MongoDB
-client = MongoClient(config.MONGO_URI)
-db = client[config.DB_NAME]
-collection = db[config.COLLECTION_NAME]
+# Load MongoDB connection from environment variables
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+DB_NAME = "vulnerability_db"
+COLLECTION_NAME = "vulnerabilities"
 
-def insert_vulnerability(data):
-    """Insert vulnerability data into MongoDB"""
-    collection.insert_one(data)
+# Initialize MongoDB client
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
+collection = db[COLLECTION_NAME]
 
-def get_all_vulnerabilities():
-    """Retrieve all vulnerabilities"""
-    return list(collection.find({}, {"_id": 0}))  # Hide MongoDB's default _id
+def insert_vulnerability(vuln_data):
+    """Insert a new vulnerability if it doesn't already exist."""
+    if not collection.find_one({"cve_id": vuln_data["cve_id"]}):  # Avoid duplicates
+        collection.insert_one(vuln_data)
+        print(f"✅ Inserted: {vuln_data['cve_id']}")
+    else:
+        print(f"⚠️ Skipping duplicate: {vuln_data['cve_id']}")
 
-def get_vulnerabilities_by_oem(oem_name):
-    """Retrieve vulnerabilities for a specific OEM"""
-    return list(collection.find({"oem": oem_name}, {"_id": 0}))
+def check_existing_vulnerability(cve_id):
+    """Check if a vulnerability already exists."""
+    return collection.find_one({"cve_id": cve_id}) is not None
