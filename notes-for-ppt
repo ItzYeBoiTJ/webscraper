@@ -1,0 +1,58 @@
+Slide 1: Title Slide
+Project Name: Real-Time OEM Vulnerability Tracking Tool
+Hackathon: CODE NEURAL '25
+Team: Tarnished
+
+Slide 2: Problem Statement & Solution
+* Problem Statement:
+OEMs (Original Equipment Manufacturers) like Dell, NVIDIA, and Intel release security advisories for hardware and software vulnerabilities. However, organizations struggle to:
+1 Track vulnerabilities in real time from multiple sources.
+2 Prioritize critical vulnerabilities that impact their systems.
+3 Receive alerts before an exploit occurs.
+
+* Our Solution:
+1 A real-time web scraping tool that fetches security vulnerabilities from Dell’s Security Advisory Page & NVD Database.
+2 Stores vulnerabilities in a database and provides an API to access them.
+3 Ranks vulnerabilities by severity (High, Medium, Low).
+4 Displays data on a dashboard for easy tracking & alerts.
+
+Slide 3: Methodology & Workflow
+1 Data Collection:
+
+Fetch vulnerabilities from Dell Security Page & NVD API.
+Use web scraping (Selenium, BeautifulSoup) & API calls to extract data.
+2 Data Processing & Storage:
+
+Clean and structure the data.
+Store in a MongoDB database.
+3 Backend API Development:
+
+Develop Flask API to provide searchable & filterable vulnerability data.
+4 Frontend Dashboard (Optional):
+
+Display vulnerabilities in a simple, interactive UI.
+Search, filter, and sort by severity & OEM.
+5 Alerts & Notifications (Future Scope):
+
+Send email or Slack alerts for critical vulnerabilities.
+
+
+Slide 4: Impact & Benefits
+ *Why is this important?
+1 Helps security teams react faster to OEM vulnerabilities.
+2 Automates tracking instead of manual searches.
+3 Prioritizes threats, reducing cybersecurity risks.
+4 Scalable – Can integrate more OEMs & AI-based risk assessment in the future.
+
+
+Slide 5: Conclusion & Next Steps
+* Current Achievements:
+✔ Successfully scraped NVD & Dell vulnerabilities.
+✔ API is ready to serve real-time data.
+
+* Future Improvements:
+✔ Add more OEM sources (NVIDIA, HP, etc.).
+✔ Implement AI-based threat prioritization.
+✔ Integrate email alerts for critical vulnerabilities.
+
+Thank You!
