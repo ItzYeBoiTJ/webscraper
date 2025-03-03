@@ -2,7 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
-from database import insert_vulnerability
+from database.database import insert_vulnerability
 
 MICROSOFT_ADVISORIES_URL = "https://msrc.microsoft.com/update-guide/en-us"
 
