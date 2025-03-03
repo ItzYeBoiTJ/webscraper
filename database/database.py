@@ -2,14 +2,22 @@ from pymongo import MongoClient
 import os
 
 # Load MongoDB connection from environment variables
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
-DB_NAME = "vulnerability_db"
+MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://admin:admin@cluster0.zhqcj.mongodb.net/")
+DB_NAME = "oem_vulnerabilities"
 COLLECTION_NAME = "vulnerabilities"
 
 # Initialize MongoDB client
-client = MongoClient(MONGO_URI)
-db = client[DB_NAME]
-collection = db[COLLECTION_NAME]
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)  # 5s timeout
+    db = client[DB_NAME]
+    collection = db[COLLECTION_NAME]
+    
+    # Test the connection
+    client.server_info()  # Will raise an exception if connection fails
+    print("✅ Connected to MongoDB successfully!")
+
+except Exception as e:
+    print(f"❌ MongoDB Connection Failed: {e}")
 
 def insert_vulnerability(vuln_data):
     """Insert a new vulnerability if it doesn't already exist."""

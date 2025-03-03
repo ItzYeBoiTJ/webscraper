@@ -1,5 +1,9 @@
-import praw
+import sys
 import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+import praw
 import logging
 from dotenv import load_dotenv
 from database.database import insert_vulnerability

@@ -1,12 +1,21 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from database.database import insert_vulnerability
+
 # scrapers/fetch_microsoft.py
 import os
 import sys
 import requests
 from bs4 import BeautifulSoup
 import logging
+<<<<<<< HEAD
 from database.database import insert_vulnerability
 
 
+=======
+>>>>>>> 2ced185d221c8ea869bb3dfb511f523c4bbdabea
 MICROSOFT_ADVISORIES_URL = "https://msrc.microsoft.com/update-guide/en-us"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
