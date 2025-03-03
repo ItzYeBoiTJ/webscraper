@@ -1,18 +1,21 @@
+import sys
+import os
 import time
 import logging
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from database.database import insert_vulnerability
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Environment Variables (Optional)
-BRAVE_PATH = os.getenv("BRAVE_PATH", "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe")
+# Headless mode from .env
 HEADLESS_MODE = os.getenv("HEADLESS_MODE", "True").lower() == "true"
 
 # Dell Security Advisories URL
@@ -21,15 +24,14 @@ DELL_SECURITY_URL = "https://www.dell.com/support/security/en-us"
 def scrape_dell_vulnerabilities():
     """Scrape Dell's security advisories using Selenium"""
     options = Options()
-    options.binary_location = BRAVE_PATH  # Use Brave browser
     options.headless = HEADLESS_MODE  # Run headless if enabled
     options.add_argument("--disable-blink-features=AutomationControlled")  # Bypass bot detection
 
-    # Setup WebDriver
+    # Setup WebDriver for Chrome
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
 
-    logging.info("🚀 Opening Dell security page with Brave...")
+    logging.info("🚀 Opening Dell security page with Chrome...")
     driver.get(DELL_SECURITY_URL)
     time.sleep(5)  # Wait for JavaScript to load the page
 
