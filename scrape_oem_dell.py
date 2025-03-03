@@ -1,18 +1,19 @@
-# scrape_oem_dell.py
 import time
 import logging
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from database import insert_vulnerability
+from database.database import insert_vulnerability
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Path to Brave browser (Change this to your Brave path)
-BRAVE_PATH = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+# Environment Variables (Optional)
+BRAVE_PATH = os.getenv("BRAVE_PATH", "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe")
+HEADLESS_MODE = os.getenv("HEADLESS_MODE", "True").lower() == "true"
 
 # Dell Security Advisories URL
 DELL_SECURITY_URL = "https://www.dell.com/support/security/en-us"
@@ -21,7 +22,7 @@ def scrape_dell_vulnerabilities():
     """Scrape Dell's security advisories using Selenium"""
     options = Options()
     options.binary_location = BRAVE_PATH  # Use Brave browser
-    options.headless = False  # Set to True to run in background
+    options.headless = HEADLESS_MODE  # Run headless if enabled
     options.add_argument("--disable-blink-features=AutomationControlled")  # Bypass bot detection
 
     # Setup WebDriver
@@ -44,13 +45,18 @@ def scrape_dell_vulnerabilities():
     for advisory in advisory_entries:
         try:
             cve_id = advisory.find_element(By.TAG_NAME, "a").text.strip()
-        except:
+        except Exception:
             cve_id = "Unknown"
 
         try:
             description = advisory.find_element(By.TAG_NAME, "p").text.strip()
-        except:
+        except Exception:
             description = "No Description"
+
+        try:
+            published_date = advisory.find_element(By.CLASS_NAME, "sc-published-date").text.strip()
+        except Exception:
+            published_date = "N/A"
 
         severity = "High" if "critical" in description.lower() else "Medium"
 
@@ -60,7 +66,7 @@ def scrape_dell_vulnerabilities():
             "cvss_score": "N/A",
             "severity": severity,
             "oem": "Dell",
-            "published_date": "N/A",
+            "published_date": published_date,
             "source": "Dell Security Page"
         }
 
