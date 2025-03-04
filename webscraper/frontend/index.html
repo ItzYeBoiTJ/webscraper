@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="shortcut icon" href="/PublicMedia/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="global.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">SCRAPPING TOOL</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#services">About</a>
+            <a href="#pricing">Sources</a>
+            <a href="#contact">Contact Us</a>
+            <a href="loginshow.html">Login/Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>SCRAPING TOOL</h1>
+        <p>A real-time vulnerability intelligence platform</p>
+        <a href="#services">
+            <button class="btn"><a href="react.html">Explore Now</a> <i class='bx bxs-caret-down-circle'></i></button>
+        </a>
+    </section>
+
+    <!-- Services Section -->
+     <section class="services" id="services">
+        <h2 class="section-title">What <span>We</span> Provide</h2>
+        <p>
+            A real-time vulnerability intelligence platform aggregating global data to:  
+            - Detect security flaws in OEM systems with dynamic risk rankings,  
+            - Deliver personalized alerts for product-specific vulnerabilities,  
+            - Empower users through a secure dashboard for proactive threat management.  
+        </p>
+        <div class="services-container">
+            <h2>TECHSTACK</h2>
+            <div class="services-list">
+                <div class="service-box">
+                    <h3>SOURCES</h3>
+                    <div class="service-info">
+                        <p>Data is scraped from offial pages: MONGODB</p>
+                        <a href=""><button>Learn More</button></a>
+                    </div>
+                </div>
+                <div class="service-box">
+                    <h3>FRONTEND</h3>
+                    <div class="service-info">
+                        <p>HTML,CSS,JS,TAILWAND CSS,REACT.JS,TYPESCRIPT</p>
+                        <a href=""><button>Learn More</button></a>
+                    </div>
+                </div>
+                <div class="service-box">
+                    <h3>BACKEND</h3>
+                    <div class="service-info">
+                        <p>NODE.JS,FLASK</p>
+                        <a href=""><button>Learn More</button></a>
+                    </div>
+                </div>
+            </div>
+            <a href=""><button class="btn">Know More <i class='bx bxs-caret-right-circle'></i></button></a>
+        </div>
+     </section>
+
+    <!-- Pricing Section -->
+     <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <div class="left-pricing">
+                <h2>HOW DOES WEB SCRAPING WORK</h2>
+            </div>
+            <div class="right-pricing">
+                <p>"Python web scraping automates data extraction using libraries like requests to fetch pages,
+                     BeautifulSoup to parse HTML, Selenium for dynamic content, 
+                     and stores structured data (e.g., CSV/JSON) for analysis or alerts."
+                    
+                </p>
+            </div>
+        </div>
+        <div class="pricing-details">
+            <h2>HOW TO USE:</h2>
+            <div class="pricing-box-container">
+                <div class="pricing-box">
+                    <i class='bx bxs-basket'></i>
+                    <div class="pricing-info">
+                        <h3>SIGN-IN</h3>
+                        <p>Sign in because this is the main feature that helps in getting alerts</p> 
+                    </div>
+                </div>
+                <div class="pricing-box">
+                    <i class='bx bxs-timer' ></i>
+                    <div class="pricing-info">
+                        <h3>ALLOW NOTIFICATIONS:</h3>
+                        <p>
+                            Ensure NOTIFICATIONS is turned on so that you can get alerts on time.
+                        </p>
+                    </div>
+                </div>
+                <div class="pricing-box">
+                    <i class='bx bx-money'></i>
+                    <div class="pricing-info">
+                        <h3>RANKINGS</h3>
+                        <p>Threats are checked are given scores on the basis of priority</p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+     </section>
+
+    <!------------------  Contact Section ---------------- -->
+
+    <section class="contact" id="contact">
+        <h2 class="section-title">Contact <span>Me!</span></h2>
+
+        <form action="">
+            <div class="input-box">
+                <input type="text" placeholder="Full Name" name="fullname" required>
+                <input type="email" placeholder="Email Address" id="email" name="email" required>
+            </div>
+            <div class="input-box">
+                <input type="number" placeholder="Mobile Number" id="mobileNumber" name="mobilenumber" required>
+                <input type="text" placeholder="Subject" name="subject" required>
+            </div>
+            <textarea cols="30" rows="10" placeholder="Your Message" name="message" required></textarea>
+            <input type="submit" value="Submit" class="submit-btn">
+        </form>
+        
+    </section>
+
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Scrapping tool. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
